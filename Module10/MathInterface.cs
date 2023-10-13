@@ -16,10 +16,24 @@ namespace Module10
         /// </summary>
         /// <param name="a">Слагаемое 1</param>
         /// <param name="b">Слагаемое 2</param>
-        /// <returns></returns>
-        public double Sum(double a, double b)
+        /// <param name="logger">Переменная для передачи сообщения в класс логирования</param>
+        /// <returns>Возвращаем сумму чисел</returns>
+
+        public ILogger Logger { get; set; }
+        
+        public double Sum(double a, double b, ILogger logger)
         {
-            return (a + b);
+            Logger = logger;
+            Logger.Event($"Считаем сумму {a} + {b}");
+            try //чуть не забыл про возможность переполнения
+            {
+                return a + b;
+            }
+            catch (OverflowException ex)
+            {
+                Logger?.Error(ex.Message);
+                return 0;
+            }
         }
 
         /// <summary>
@@ -27,8 +41,9 @@ namespace Module10
         /// </summary>
         /// <param name="a">Слагаемое 1</param>
         /// <param name="b">Слагаемое 2</param>
-        /// <returns></returns>
-        public double SumImplementItYourself(double a, double b);
+        /// <param name="logger">Переменная для передачи сообщения в класс логирования</param>
+        /// <returns>Возвращаем сумму чисел</returns>
+        public double SumImplementItYourself(double a, double b, ILogger logger);
     }
 
     //методы вычитания, умножения, деления и т. п.

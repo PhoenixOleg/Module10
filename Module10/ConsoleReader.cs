@@ -11,6 +11,8 @@ namespace Module10
     /// </summary>
     internal class ConsoleReader
     {
+        static ILogger ?Logger { get; set; }
+
         /// <summary>
         /// Метод, получающий введеное с клавиатуры число
         /// </summary>
@@ -19,6 +21,8 @@ namespace Module10
         /// <returns>Возвращаемое методом значение - введеное пользователем число. По умолчанию - 0</returns>
         internal static double GetNum(string msg, out bool flag)
         {
+            Logger = new Logger();
+
             do
             {
                 Console.Write($"Введите {msg}: ");
@@ -37,13 +41,14 @@ namespace Module10
                 }
                 catch (Exception ex) //Исключение сделал общим, а не только своим
                 {
-                    Console.WriteLine(ex.Message);
+                    Logger?.Error(ex.Message);
+                    //Console.WriteLine(ex.Message);
                     if (Repeat() == false)
                     {
                         flag = false;
                         return 0;
                     }
-                    else { Console.Clear(); }    
+                    else { Console.WriteLine(); }    
                 }
             }
             while (true);
@@ -55,6 +60,8 @@ namespace Module10
         /// <returns>Возвращаемое значение: true - повторить ввод, false - не повторять</returns>
         private static bool Repeat() 
         {
+            Logger = new Logger ();
+
             Console.WriteLine("Желаете повторить ввод? (Y/N)");
             do
             {
@@ -67,7 +74,8 @@ namespace Module10
                     case ConsoleKey.Escape: //последний шанс выбраться
                         return false;
                     default:
-                        Console.WriteLine("\nНажмите \"Y\" для повтора ввода числа или \"N\" для выхода. Также можно выйти, нажав Esc");
+                        Logger?.Error("\nНажмите \"Y\" для повтора ввода числа или \"N\" для выхода. Также можно выйти, нажав Esc");
+                        //Console.WriteLine("\nНажмите \"Y\" для повтора ввода числа или \"N\" для выхода. Также можно выйти, нажав Esc");
                         break;
                 }
             }

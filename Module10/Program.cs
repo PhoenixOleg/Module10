@@ -2,8 +2,12 @@
 {
     internal class Program
     {
+        static ILogger ?Logger {  get; set; }   
+
         static void Main()
         {
+            Logger = new Logger();
+
             double num1 = ConsoleReader.GetNum("первое слагаемое", out bool flag);
             if (flag == false ) { GoodBye(-1); }
 
@@ -11,8 +15,8 @@
             if (flag == false) { GoodBye(-1); }
 
             MathProc mathProc = new(); //Оказывается так можно https://learn.microsoft.com/ru-ru/dotnet/fundamentals/code-analysis/style-rules/ide0090
-            Console.WriteLine ($"Сумма чисел {num1} и {num2} равна {((IMathProc)mathProc).Sum(num1, num2)}"); //Реализованный в интерфейсе метод
-            Console.WriteLine($"И еще раз. Сумма чисел {num1} и {num2} равна {((IMathProc)mathProc).SumImplementItYourself(num1, num2)}"); //Реализованный в классе метод
+            Console.WriteLine ($"Сумма чисел {num1} и {num2} равна {((IMathProc)mathProc).Sum(num1, num2, Logger)}"); //Реализованный в интерфейсе метод
+            Console.WriteLine($"И еще раз. Сумма чисел {num1} и {num2} равна {((IMathProc)mathProc).SumImplementItYourself(num1, num2, Logger)}"); //Реализованный в классе метод
 
             GoodBye(0);
         }
