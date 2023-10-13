@@ -13,7 +13,7 @@
             MathProc mathProc = new(); //Оказывается так можно https://learn.microsoft.com/ru-ru/dotnet/fundamentals/code-analysis/style-rules/ide0090
             Console.WriteLine ($"Сумма чисел {num1} и {num2} равна {((IMathProc)mathProc).Sum(num1, num2)}"); //Реализованный в интерфейсе метод
             Console.WriteLine($"И еще раз. Сумма чисел {num1} и {num2} равна {((IMathProc)mathProc).SumImplementItYourself(num1, num2)}"); //Реализованный в классе метод
-            
+
             GoodBye(0);
         }
 
